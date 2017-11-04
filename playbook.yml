@@ -36,6 +36,10 @@
     - libffi-dev
     - libspotify-dev
     - php5-cli
+  - name: make sure that our "root" directory exists
+    file:
+      path: "{{fonos_path}}"
+      state: directory
   - name: copy requirements.txt
     copy: src=./requirements.txt dest={{fonos_path}}/requirements.txt
   - name: setup virtualenv
@@ -70,6 +74,10 @@
   - name: automatically start pi systemd units
     become: yes
     command: loginctl enable-linger pi
+  - name: create systemd units directory
+    file:
+      path: "{{ansible_env.HOME}}/.config/systemd/user"
+      state: directory
   - name: copy systemd units
     with_items:
     - aurevoir
