@@ -7,4 +7,4 @@ WantedBy=default.target
 [Service]
 Type=simple
 ExecStart=/home/pi/fonos/env/bin/mopidy
-
+Restart=always
