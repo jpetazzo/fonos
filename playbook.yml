@@ -97,6 +97,6 @@
       daemon_reload: yes
       enabled: yes
       name: "{{item}}"
-      state: started
+      state: restarted
       user: yes
 
