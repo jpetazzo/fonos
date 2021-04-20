@@ -9,6 +9,7 @@ raspberrypi.local
 strawberrypi.local
 
 [fonos:vars]
+ansible_python_interpreter=auto
 spotify_client_id=1234abcd-f00d-dead-beef-1234abcd6789
 spotify_username=sclarke
 spotify_password=sch00lday5

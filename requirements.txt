@@ -15,4 +15,8 @@ mopidy-musicbox-webclient
 mopidy-spotmop
 
 Flask
+
+# ZeroConf 0.20 dropped support for Python 2.
+# For now, pin that version until we upgrade everything else.
+#zeroconf==0.19.1
 zeroconf
