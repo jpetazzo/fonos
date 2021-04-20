@@ -2,6 +2,7 @@
 - hosts: fonos
   vars:
   - fonos_path: /home/pi/fonos
+  - python_major_minor: "{{'.'.join(ansible_python_version.split('.')[:2])}}"
   remote_user: pi
   tasks:
   - name: add mopidy repository key
@@ -45,11 +46,11 @@
     pip:
       requirements: "{{fonos_path}}/requirements.txt"
       virtualenv: "{{fonos_path}}/env"
-  #- name: setup symlink for gstreamer/gobject/python in virtualenv
-  #  file:
-  #    state: link
-  #    src: /usr/lib/python2.7/dist-packages/gi
-  #    dest: "{{fonos_path}}/env/lib/python2.7/site-packages/gi"
+  - name: setup symlink for gstreamer/gobject/python in virtualenv
+    file:
+      state: link
+      src: /usr/lib/python3/dist-packages/gi
+      dest: "{{fonos_path}}/env/lib/python{{python_major_minor}}/site-packages/gi"
   - name: checkout PaWebControl
     git:
       repo: git://github.com/jpetazzo/PaWebControl
@@ -74,7 +75,7 @@
     with_items:
     - client.conf
     - daemon.conf
-    - init.pa
+    - default.pa
     copy:
       src: ./pulse-{{item}}
       dest: "{{ansible_env.HOME}}/.config/pulse/{{item}}"
