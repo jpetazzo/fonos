@@ -25,6 +25,7 @@
       - python3-gst-1.0
       - git
       - pulseaudio
+      - pulseaudio-module-bluetooth
       - pulseaudio-module-zeroconf
       - gstreamer1.0-tools
       - gstreamer1.0-plugins-good
@@ -59,19 +60,19 @@
     git:
       repo: git://github.com/jpetazzo/AuRevoir
       dest: "{{fonos_path}}/AuRevoir"
-  - name: Mopidy configuration directory
+  - name: create Mopidy config directory
     file:
       path: "{{ansible_env.HOME}}/.config/mopidy"
       state: directory
-  - name: Mopidy configuration
+  - name: generate Mopidy configuration
     template:
       src: ./mopidy.conf.j2
       dest: "{{ansible_env.HOME}}/.config/mopidy/mopidy.conf"
-  - name: PulseAudio configuration directory
+  - name: create PulseAudio config directory
     file:
       path: "{{ansible_env.HOME}}/.config/pulse"
       state: directory
-  - name: PulseAudio configuration
+  - name: copy PulseAudio configuration
     with_items:
     - client.conf
     - daemon.conf
@@ -79,9 +80,13 @@
     copy:
       src: ./pulse-{{item}}
       dest: "{{ansible_env.HOME}}/.config/pulse/{{item}}"
-  - name: automatically start pi systemd units
+  - name: create systemd config directory
+    file:
+      path: "{{ansible_env.HOME}}/.config/systemd/user"
+      state: directory
+  - name: automatically start systemd units for our user
     become: yes
-    command: loginctl enable-linger pi
+    command: loginctl enable-linger {{ansible_user_id}}
   - name: create systemd units directory
     file:
       path: "{{ansible_env.HOME}}/.config/systemd/user"
@@ -107,4 +112,3 @@
       name: "{{item}}"
       state: restarted
       scope: user
-

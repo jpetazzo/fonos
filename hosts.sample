@@ -5,12 +5,13 @@
 # It is also recommended to add your Spotify credentials.
 
 [fonos]
-raspberrypi.local
-strawberrypi.local
+fonos.local
+fonos2.local
 
 [fonos:vars]
 ansible_python_interpreter=auto
 spotify_client_id=1234abcd-f00d-dead-beef-1234abcd6789
+spotify_client_secret=abcDEF123-ghi_JKL
 spotify_username=sclarke
 spotify_password=sch00lday5
 soundcloud_auth_token=1-23456-78999999-abc123def456789
